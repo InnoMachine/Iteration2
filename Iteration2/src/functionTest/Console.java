@@ -47,10 +47,16 @@ public class Console {
 					String field = s.substring(0, s.indexOf("-")-1);
 					if(s.contains("-season")){
 						ArrayList<PlayerKingInfo> ob= SetKingInfo(field,true);
-						out.println(ob.toString());
+						for(int p =0;p<ob.size();p++){
+							out.println(p+1);
+							out.println(ob.get(p).toString());
+						}
 					}else{
 						ArrayList<PlayerKingInfo> ob= SetKingInfo(field,false);
-						out.println(ob.toString());
+						for(int p =0;p<ob.size();p++){
+							out.println(p+1);
+							out.println(ob.get(p).toString());
+						}
 					}
 				}
 				else if(order.contains("-hot")){
@@ -63,7 +69,10 @@ public class Console {
 						field = s.substring(0);
 					}
 					ArrayList<PlayerHotInfo> ob= SetHotInfo(field,n);
-					out.println(ob.toString());
+					for(int p =0;p<ob.size();p++){
+						out.println(p+1);
+						out.println(ob.get(p).toString());
+					}
 				}
 				else if(order.contains("-sort")){
 					ArrayList<PlayerVo> listvo = null ;
@@ -144,14 +153,14 @@ public class Console {
 						if(order.contains("-total")){
 							ArrayList<PlayerNormalInfo> ob= CreateTotalPlayerNormalInfo(list,n);
 							for(int p =0;p<ob.size();p++){
-								out.print(p+1);
+								out.println(p+1);
 								out.println(ob.get(p).toString());
 							}	
 						}
 						else{
 							ArrayList<PlayerNormalInfo> ob= CreateAvgPlayerNormalInfo(list,n);
 							for(int p =0;p<ob.size();p++){
-								out.print(p+1);
+								out.println(p+1);
 								out.println(ob.get(p).toString());
 							}
 						}
@@ -162,14 +171,14 @@ public class Console {
 						if(order.contains("-total")){
 							ArrayList<PlayerHighInfo> ob= CreateTotalPlayerHighInfo(listvo,n);
 							for(int p =0;p<ob.size();p++){
-								out.print(p+1);
+								out.println(p+1);
 								out.println(ob.get(p).toString());
 							}
 						}
 						else{
 							ArrayList<PlayerHighInfo> ob= CreateAvgPlayerHighInfo(listvo,n);
 							for(int p =0;p<ob.size();p++){
-								out.print(p+1);
+								out.println(p+1);
 								out.println(ob.get(p).toString());
 							}
 						}
@@ -194,7 +203,7 @@ public class Console {
 					}
 					ArrayList<TeamHotInfo> ob= SetTeamHotInfo(field,n);
 					for(int p =0;p<ob.size();p++){
-						out.print(p+1);
+						out.println(p+1);
 						out.println(ob.get(p).toString());
 					}
 				}
@@ -222,14 +231,14 @@ public class Console {
 					if(order.contains("-total")){
 						ArrayList<TeamHighInfo> ob= CreateTotalTeamHighInfo(list,n);
 						for(int p =0;p<ob.size();p++){
-							out.print(p+1);
+							out.println(p+1);
 							out.println(ob.get(p).toString());
 						}
 					}
 					else{
 						ArrayList<TeamHighInfo> ob= CreateAvgTeamHighInfo(list,n);
 						for(int p =0;p<ob.size();p++){
-							out.print(p+1);
+							out.println(p+1);
 							out.println(ob.get(p).toString());
 						}
 						}
@@ -257,14 +266,14 @@ public class Console {
 					if(order.contains("-total")){
 						ArrayList<TeamNormalInfo> ob= CreateTotalTeamNormalInfo(list,n);
 						for(int p =0;p<ob.size();p++){
-							out.print(p+1);
+							out.println(p+1);
 							out.println(ob.get(p).toString());
 						}
 					}
 					else{
 						ArrayList<TeamNormalInfo> ob= CreateAvgTeamNormalInfo(list,n);
 						for(int p =0;p<ob.size();p++){
-							out.print(p+1);
+							out.println(p+1);
 							out.println(ob.get(p).toString());
 						}
 					}
@@ -326,7 +335,6 @@ public class Console {
 			temp.setOffendRebound(list.get(i).getOffensiveReboundField());
 			temp.setPenalty(list.get(i).getFreeThrowRate());
 			temp.setPoint(list.get(i).getScoreField());
-			//temp.setStart(start);
 			temp.setSteal(list.get(i).getStealField());
 			temp.setThree(list.get(i).getThreePointHitRate());
 			temp.setShot(list.get(i).getHitRate());
@@ -348,7 +356,6 @@ public class Console {
 			temp.setOffendRebound(list.get(i).getOffensiveRebound());
 			temp.setPenalty(list.get(i).getFreeThrowRate());
 			temp.setPoint(list.get(i).getScore());
-			//temp.setStart(start);
 			temp.setSteal(list.get(i).getSteal());
 			temp.setThree(list.get(i).getThreePointHitRate());
 			temp.setShot(list.get(i).getHitRate());
@@ -511,7 +518,7 @@ public class Console {
 			temp.setOffend(list.get(i).getAttackingNumField());
 			temp.setPenalty(list.get(i).getFreeThrowRate());
 			temp.setPoint(list.get(i).getScoreField());
-			//temp.setStart(start);
+			temp.setStart(list.get(i).getFirstOnNum());
 			temp.setSteal(list.get(i).getStealField());
 			temp.setTeamName(list.get(i).getTeam());
 			temp.setThree(list.get(i).getThreePointHitRate());
@@ -539,7 +546,7 @@ public class Console {
 			temp.setOffend(list.get(i).getAttackingNum());
 			temp.setPenalty(list.get(i).getFreeThrowRate());
 			temp.setPoint(list.get(i).getScore());
-			//temp.setStart(start);
+			temp.setStart(list.get(i).getFirstOnNum());
 			temp.setSteal(list.get(i).getSteal());
 			temp.setTeamName(list.get(i).getTeam());
 			temp.setThree(list.get(i).getThreePointHitRate());
