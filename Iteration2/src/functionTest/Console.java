@@ -143,11 +143,17 @@ public class Console {
 						}
 						if(order.contains("-total")){
 							ArrayList<PlayerNormalInfo> ob= CreateTotalPlayerNormalInfo(list,n);
-							out.println(ob.toString());
+							for(int p =0;p<ob.size();p++){
+								out.print(p+1);
+								out.println(ob.get(p).toString());
+							}	
 						}
 						else{
 							ArrayList<PlayerNormalInfo> ob= CreateAvgPlayerNormalInfo(list,n);
-							out.println(ob.toString());
+							for(int p =0;p<ob.size();p++){
+								out.print(p+1);
+								out.println(ob.get(p).toString());
+							}
 						}
 						
 						
@@ -155,11 +161,17 @@ public class Console {
 					else{
 						if(order.contains("-total")){
 							ArrayList<PlayerHighInfo> ob= CreateTotalPlayerHighInfo(listvo,n);
-							out.println(ob.toString());
+							for(int p =0;p<ob.size();p++){
+								out.print(p+1);
+								out.println(ob.get(p).toString());
+							}
 						}
 						else{
 							ArrayList<PlayerHighInfo> ob= CreateAvgPlayerHighInfo(listvo,n);
-							out.println(ob.toString());
+							for(int p =0;p<ob.size();p++){
+								out.print(p+1);
+								out.println(ob.get(p).toString());
+							}
 						}
 					}
 				}
@@ -181,7 +193,10 @@ public class Console {
 						field = s.substring(0);
 					}
 					ArrayList<TeamHotInfo> ob= SetTeamHotInfo(field,n);
-					out.println(ob.toString());
+					for(int p =0;p<ob.size();p++){
+						out.print(p+1);
+						out.println(ob.get(p).toString());
+					}
 				}
 				else if(!order.contains("-high")){
 					
@@ -206,11 +221,17 @@ public class Console {
 					}
 					if(order.contains("-total")){
 						ArrayList<TeamHighInfo> ob= CreateTotalTeamHighInfo(list,n);
-						out.println(ob.toString());
+						for(int p =0;p<ob.size();p++){
+							out.print(p+1);
+							out.println(ob.get(p).toString());
+						}
 					}
 					else{
 						ArrayList<TeamHighInfo> ob= CreateAvgTeamHighInfo(list,n);
-						out.println(ob.toString());
+						for(int p =0;p<ob.size();p++){
+							out.print(p+1);
+							out.println(ob.get(p).toString());
+						}
 						}
 					}
 				else{
@@ -235,11 +256,17 @@ public class Console {
 					}
 					if(order.contains("-total")){
 						ArrayList<TeamNormalInfo> ob= CreateTotalTeamNormalInfo(list,n);
-						out.println(ob.toString());
+						for(int p =0;p<ob.size();p++){
+							out.print(p+1);
+							out.println(ob.get(p).toString());
+						}
 					}
 					else{
 						ArrayList<TeamNormalInfo> ob= CreateAvgTeamNormalInfo(list,n);
-						out.println(ob.toString());
+						for(int p =0;p<ob.size();p++){
+							out.print(p+1);
+							out.println(ob.get(p).toString());
+						}
 					}
 					
 					
