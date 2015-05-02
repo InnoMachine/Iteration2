@@ -3,7 +3,6 @@ package businessLogic;
 import java.util.ArrayList;
 
 import vo.TeamCardVo;
-import vo.TeamPerformanceInSingleGame;
 import vo.TeamRecentGames;
 import vo.TeamVo;
 
@@ -674,8 +673,5 @@ public class Team_Handler {
 			templist.add(new TeamCardVo(list.get(i),option));
 		}
 		return templist;
-	}
-	public ArrayList<TeamPerformanceInSingleGame> getTeamPerformance(String abbr){
-		return data_handler.getTeamPerformance(abbr);
 	}
 }

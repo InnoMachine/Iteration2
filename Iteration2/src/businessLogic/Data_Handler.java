@@ -19,7 +19,6 @@ import vo.PlayerVo;
 import vo.TeamPerformanceInSingleGame;
 import vo.TeamRecentGames;
 import vo.TeamVo;
-import vo.TotalInfo;
 import dataService2.GameDao;
 import dataService2.GameDaoImpl;
 import dataService2.PlayerDao;
@@ -46,7 +45,6 @@ public class Data_Handler {
 	private ArrayList<GameVo> gamevo;
 	private ArrayList<PlayerGames> listpg;
 	private SeasonTracker st;
-	private TotalInfo ti;
 	BigDecimal b;  
     
 	public static Data_Handler getInstance()
@@ -72,7 +70,6 @@ public class Data_Handler {
 		precgames = new ArrayList<PlayerRecentGames>();
 		gamevo = new ArrayList<GameVo>();
 		listpg = new ArrayList<PlayerGames>();
-		ti = new TotalInfo();
 		st = systemdao.getStById("12-13");
 		SetPlayerVo();
 		SetTeamVo();
@@ -80,28 +77,9 @@ public class Data_Handler {
 		PlayerDivisionSet();
 		playerCalculate();
 		TeamCalculate();
-		TotalCalculate();
-		
 		
 	}
 	
-	private void TotalCalculate() {
-		if(ti.getGamenum()!=0){
-			ti.calcAssistanceField();
-			ti.calcFreeRate();
-			ti.calcReboundField();
-			ti.calcScoreField();
-			ti.calcThreeRate();
-			ti.calcBlockField();
-			ti.calcMinute();
-			ti.calcStealField();
-			ti.calcTurnoverFied(); 
-			ti.calcFoulField();
-			ti.calcHitField();
-			ti.setGamenumField(ti.getGamenum()/listvo.size());
-		}
-		
-	}
 	private void PlayerDivisionSet() {
 		for(PlayerVo temp:listvo)
 		{
@@ -644,21 +622,6 @@ public class Data_Handler {
 					listvo.get(i).setOpReboundAll(listvo.get(i).getOpReboundAll()+tgp.getOpDefensiveRebound()+tgp.getOpOffensiveRebound());
 					listvo.get(i).setOpRoundAttack(listvo.get(i).getOpRoundAttack()+tgp.getOpRoundAttack());
 					listvo.get(i).setOpTwoPointShotNum(listvo.get(i).getOpTwoPointShotNum()+tgp.getOpTwoPointShotNum());
-				
-					ti.addScore(temp.getScore());
-					ti.addAssistance(temp.getAssistance());
-					ti.addFree(temp.getFreeThrowHitNum());
-					ti.addRebound(temp.getReboundOverall());
-					ti.addThree(temp.getThreePointHitNum());
-					ti.addGameNum();
-					ti.addHit(temp.getHitNum());
-					ti.addBlock(temp.getBlock());
-					ti.addFreeshot(temp.getFreeThrowShotNum());
-					ti.addSteal(temp.getSteal());
-					ti.addThreeshot(temp.getThreePointShotNum());
-					ti.addTime(temp.getTime());
-					ti.addTurnover(temp.getTurnover());
-					ti.addFoul(temp.getFoul());
 					break;
 				}
 			}
@@ -916,7 +879,6 @@ public class Data_Handler {
 	{
 		ArrayList<PlayerPerformanceInSingleGame> pplist = new ArrayList<PlayerPerformanceInSingleGame>();
 		GameDate dn = getDateNow();
-		System.out.println(dn.toString()+"得到当日比赛");
 		for(GameVo temp:gamevo){
 			if(temp.getGameDate().compareTo(dn)==0){
 				for(PlayerPerformanceInSingleGame pp:temp.getGuestTP().getPlayerList()){
@@ -997,7 +959,6 @@ public class Data_Handler {
 		}
 		playerCalculate();
 		TeamCalculate();
-		TotalCalculate();
 	}
 	public GameDate getDateNow(){
 		//st.setCurrentDate(new GameDate(2012,11,28));
@@ -1051,9 +1012,6 @@ public class Data_Handler {
 		}
 		return list;
 		
-	}
-	public TotalInfo getTotalInfo() {
-		return ti;
 	}
 	
 	public ArrayList<PlayerVo> sortByFamilyName(){

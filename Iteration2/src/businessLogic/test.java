@@ -34,8 +34,6 @@ public class test {
 		for(PlayerVo temp:pv){
 			System.out.println(temp.getName());
 		}
-		TotalInfo ti = pb.getTotalInfo();
-		System.out.println(ti.getSteal());
 		
 	}
 }

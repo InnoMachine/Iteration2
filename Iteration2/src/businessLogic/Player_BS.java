@@ -6,7 +6,6 @@ import vo.PlayerCardVo;
 import vo.PlayerGames;
 import vo.PlayerRecentGames;
 import vo.PlayerVo;
-import vo.TotalInfo;
 
 public interface Player_BS {
 	public PlayerVo getPlayerByName(String name);
@@ -20,5 +19,4 @@ public interface Player_BS {
 	public ArrayList<PlayerVo> sortPlayerBy(String option1, String option2);
 	public ArrayList<PlayerVo> searchPlayer(String key,String first) ;
 	public PlayerGames getPlayerPerformacne(String name);
-	public TotalInfo getTotalInfo();
 }
