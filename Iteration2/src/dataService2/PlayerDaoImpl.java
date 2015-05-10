@@ -1,10 +1,8 @@
 package dataService2;
 
 import java.util.ArrayList;
-
 import database2.Singleton;
 import po.PlayerPO;
-import po.SinglePerformance;
 
 public class PlayerDaoImpl implements PlayerDao {
 	
@@ -12,44 +10,43 @@ public class PlayerDaoImpl implements PlayerDao {
 	
 	@Override
 	public void add(PlayerPO player) {
-		// TODO Auto-generated method stub
-
+		singleton.addPlayer(player);
 	}
 
 	@Override
 	public void update(PlayerPO player) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deletePlayerByName(String name) {
-		// TODO Auto-generated method stub
-
+		ArrayList<PlayerPO> db = new ArrayList<PlayerPO>();
+		int index = 0;
+		db = singleton.getPlayerDB();
+		for(PlayerPO palyerFromDB: db) {
+			if(player.getName().equals(palyerFromDB.getName())) {
+				db.remove(index);
+				break;
+			}
+			index ++;
+		}
 	}
 
 	@Override
 	public PlayerPO getPlayerByName(String name) {
-		// TODO Auto-generated method stub
+		ArrayList<PlayerPO> db = new ArrayList<PlayerPO>();
+		db = singleton.getPlayerDB();
+		for(PlayerPO palyerFromDB: db) {
+			if(name.equals(palyerFromDB.getName())) {
+				return palyerFromDB;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public ArrayList<PlayerPO> getAllPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+		return singleton.getPlayerDB();
 	}
 
 	@Override
-	public void updateHostTeam(String playerName, String teamAbbr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addSinglePerformance(String playerName, SinglePerformance sp) {
-		// TODO Auto-generated method stub
-
+	public void add(ArrayList<PlayerPO> players) {
+		singleton.addPlayer(players);
 	}
 
 }

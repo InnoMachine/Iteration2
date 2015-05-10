@@ -13,7 +13,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
-
 import dataService2.GameDao;
 import dataService2.GameDaoImpl;
 import dataService2.PlayerDao;
@@ -33,15 +32,15 @@ public class DataFileReader {
 
 	private static Scanner scanner;
 
-	public static void importPlayersAndTeams() {
+	public static void importAll(String playerPath, String teamPath, String gamePath) {
 
-		DataFileReader.importPlayersFrom("CSEdata/players/info");
-		DataFileReader.importTeamsFrom("CSEdata/teams/12-13teams");
-		System.out.println("------------------------------");
+		DataFileReader.importPlayersFrom(playerPath);
+		DataFileReader.importTeamsFrom(teamPath);
+		DataFileReader.importGamesFrom(gamePath);
 
 	}
 
-	public static void importGamesFrom(ArrayList<String> gameFileNameList) {
+	public static void importGamesFrom(String path) {
 
 		String gameFileName;
 		String originalString;
@@ -49,8 +48,8 @@ public class DataFileReader {
 		GamePO game;
 		GameDao gameController = new GameDaoImpl();
 
-//		ArrayList<String> gameFileNameList = DataFileReader
-//				.getFileNameList(path);
+		ArrayList<String> gameFileNameList = DataFileReader.getFileNameList(path);
+		
 		for (int i = 0; i < gameFileNameList.size(); i ++) {
 			gameFileName = gameFileNameList.get(i);
 			originalString = DataFileReader.getOriginalFileString(gameFileName);

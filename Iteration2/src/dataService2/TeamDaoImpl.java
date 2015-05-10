@@ -1,10 +1,8 @@
 package dataService2;
 
 import java.util.ArrayList;
-
 import database2.Singleton;
 import po.TeamPO;
-import po.TeamPerformance;
 
 public class TeamDaoImpl implements TeamDao {
 
@@ -12,57 +10,43 @@ public class TeamDaoImpl implements TeamDao {
 	
 	@Override
 	public void add(TeamPO team) {
-		// TODO Auto-generated method stub
-
+		singleton.addTeam(team);
 	}
 
 	@Override
 	public void update(TeamPO team) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteTeamByAbbr(String abbr) {
-		// TODO Auto-generated method stub
-
+		ArrayList<TeamPO> db = new ArrayList<TeamPO>();
+		int index = 0;
+		db = singleton.getTeamDB();
+		for(TeamPO teamFromDB: db) {
+			if(team.getAbbreviation().equals(teamFromDB.getAbbreviation())) {
+				db.remove(index);
+				break;
+			}
+			index ++;
+		}
 	}
 
 	@Override
 	public TeamPO getTeamByAbbr(String abbr) {
-		// TODO Auto-generated method stub
+		ArrayList<TeamPO> db = new ArrayList<TeamPO>();
+		db = singleton.getTeamDB();
+		for(TeamPO teamFromDB: db) {
+			if(abbr.equals(teamFromDB.getAbbreviation())) {
+				return teamFromDB;
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public ArrayList<TeamPO> getAllTeams() {
-		// TODO Auto-generated method stub
-		return null;
+		return singleton.getTeamDB();
 	}
 
 	@Override
-	public void addTeamPerformance(TeamPerformance tp, String teamAbbr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addCurrentPlayer(String playerName, String teamAbbr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void playerTrans(String playerName, String fromTeamAbbr,
-			String toTeamAbbr) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void changeTeamName(String teamAbbr, TeamPO newTeam) {
-		// TODO Auto-generated method stub
-
+	public void add(ArrayList<TeamPO> teams) {
+		singleton.addTeam(teams);
 	}
 
 }

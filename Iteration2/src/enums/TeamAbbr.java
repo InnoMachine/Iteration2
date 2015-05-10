@@ -19,6 +19,8 @@ public enum TeamAbbr {
 
 	SAC, SAS, TOR, UTA, WAS,
 	
+	NOP
+	
 	
 	
 

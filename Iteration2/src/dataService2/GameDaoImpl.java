@@ -16,10 +16,7 @@ public class GameDaoImpl implements GameDao {
 	
 	@Override
 	public void add(GamePO game) {
-		ArrayList<GamePO> db = new ArrayList<GamePO>();
-		db = singleton.getGameDB();
-		db.add(game);
-		singleton.setGameDB(db);
+		singleton.addGame(game);
 	}
 
 	@Override
@@ -33,18 +30,6 @@ public class GameDaoImpl implements GameDao {
 				break;
 			}
 			index ++;
-		}
-	}
-
-	@Override
-	public void deleteGameByLabel(String label) {
-		ArrayList<GamePO> db = new ArrayList<GamePO>();
-		db = singleton.getGameDB();
-		for(GamePO gameFromDB: db) {
-			if(label.equals(gameFromDB.getGameLabel())) {
-				db.remove(gameFromDB);
-				break;
-			}
 		}
 	}
 
@@ -66,17 +51,8 @@ public class GameDaoImpl implements GameDao {
 	}
 
 	@Override
-	public ArrayList<GamePO> getNewGamePOs() {
-		// sudo
-		return null;
-	}
-
-	@Override
 	public void add(ArrayList<GamePO> gameList) {
-		ArrayList<GamePO> db = new ArrayList<GamePO>();
-		db = singleton.getGameDB();
-		db.addAll(gameList);
-		singleton.setGameDB(db);
+		singleton.addGame(gameList);
 	}
 
 }

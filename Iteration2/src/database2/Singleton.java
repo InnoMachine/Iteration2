@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import po.GamePO;
 import po.PlayerPO;
-import po.SeasonTracker;
 import po.TeamPO;
 
 public class Singleton {
@@ -18,9 +17,6 @@ public class Singleton {
 	private ArrayList<GamePO> gameDB = new ArrayList<GamePO>();
 	private ArrayList<PlayerPO> playerDB = new ArrayList<PlayerPO>();
 	private ArrayList<TeamPO> teamDB = new ArrayList<TeamPO>();
-	private SeasonTracker seasonTrackerDB = new SeasonTracker();
-	
-	private ArrayList<GamePO> newGames = new ArrayList<GamePO>();
 	
 	private Singleton() {//private constructor
 		System.out.println("database initialized1");
@@ -79,22 +75,6 @@ public class Singleton {
 
 	public void setTeamDB(ArrayList<TeamPO> teamDB) {
 		this.teamDB = teamDB;
-	}
-
-	public SeasonTracker getSeasonTrackerDB() {
-		return seasonTrackerDB;
-	}
-
-	public void setSeasonTrackerDB(SeasonTracker seasonTrackerDB) {
-		this.seasonTrackerDB = seasonTrackerDB;
-	}
-
-	public ArrayList<GamePO> getNewGames() {
-		return newGames;
-	}
-
-	public void setNewGames(ArrayList<GamePO> newGames) {
-		this.newGames = newGames;
 	}
 	
 }

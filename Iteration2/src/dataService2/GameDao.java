@@ -15,13 +15,9 @@ public interface GameDao {
 	
 	public void update(GamePO game);
 	
-	public void deleteGameByLabel(String label);
-	
 	public GamePO getGameByLabel(String label);
 	
 	public ArrayList<GamePO> getAllGames();
-	
-	public ArrayList<GamePO> getNewGamePOs();
 	
 	public void add(ArrayList<GamePO> gameList);
 	
