@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+
+import dataService2.DaoFactory;
 import dataService2.GameDao;
 import dataService2.GameDaoImpl;
 import dataService2.PlayerDao;
@@ -31,7 +33,14 @@ import po.TeamPerformance;
 public class DataFileReader {
 
 	private static Scanner scanner;
-
+	
+	public static void main(String[] args) {
+		importAll("CSEdata/players/info","CSEdata/teams/12-13teams","CSEdata/matches");
+		System.out.println(DaoFactory.getPlayerDaoInstance().getAllPlayers());
+		System.out.println(DaoFactory.getGameDaoInstence().getAllGames());
+		System.out.println(DaoFactory.getTeamDaoInstance().getAllTeams());
+	}
+	
 	public static void importAll(String playerPath, String teamPath, String gamePath) {
 
 		DataFileReader.importPlayersFrom(playerPath);
