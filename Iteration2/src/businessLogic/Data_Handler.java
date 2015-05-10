@@ -7,7 +7,6 @@ import java.util.Calendar;
 import po.GameDate;
 import po.GamePO;
 import po.PlayerPO;
-import po.SeasonTracker;
 import po.SinglePerformance;
 import po.TeamPO;
 import po.TeamPerformance;
@@ -23,8 +22,6 @@ import dataService2.GameDao;
 import dataService2.GameDaoImpl;
 import dataService2.PlayerDao;
 import dataService2.PlayerDaoImpl;
-import dataService2.SystemDao;
-import dataService2.SystemDaoImpl;
 import dataService2.TeamDao;
 import dataService2.TeamDaoImpl;
 
@@ -34,7 +31,6 @@ public class Data_Handler {
 	protected PlayerDao playerdao;
 	protected GameDao gamedao;
 	protected TeamDao teamdao;
-	protected SystemDao systemdao;
 	private ArrayList<PlayerPO> listpo;
 	private ArrayList<TeamPO> teamlistpo;
 	private ArrayList<PlayerVo> listvo;
@@ -44,7 +40,6 @@ public class Data_Handler {
 	private ArrayList<PlayerRecentGames> precgames;
 	private ArrayList<GameVo> gamevo;
 	private ArrayList<PlayerGames> listpg;
-	private SeasonTracker st;
 	BigDecimal b;  
     
 	public static Data_Handler getInstance()
@@ -60,7 +55,6 @@ public class Data_Handler {
 		playerdao = new PlayerDaoImpl();
 		gamedao = new GameDaoImpl();
 		teamdao = new TeamDaoImpl();
-		systemdao = new SystemDaoImpl();
 		listpo  = playerdao.getAllPlayers();
 		teamlistpo = teamdao.getAllTeams();
 		listvo = new ArrayList<PlayerVo>();
@@ -70,7 +64,6 @@ public class Data_Handler {
 		precgames = new ArrayList<PlayerRecentGames>();
 		gamevo = new ArrayList<GameVo>();
 		listpg = new ArrayList<PlayerGames>();
-		st = systemdao.getStById("12-13");
 		SetPlayerVo();
 		SetTeamVo();
 		loadGames();
@@ -754,7 +747,6 @@ public class Data_Handler {
 			temp.setDivision(teamlistpo.get(i).getDivision());
 			temp.setHomeField(teamlistpo.get(i).getHomeField());
 			temp.setBirthYear(teamlistpo.get(i).getBirthYear());
-			temp.setImgPath(teamlistpo.get(i).getImgPath());
 			
 			
 			temp.setTime(0);
@@ -804,8 +796,6 @@ public class Data_Handler {
 			temp.setAge(listpo.get(i).getAge());
 			temp.setExp(listpo.get(i).getExp());
 			temp.setSchool(listpo.get(i).getSchool());
-			temp.setActionImgPath(listpo.get(i).getActionImgPath());
-			temp.setPortraitImgPath(listpo.get(i).getPortraitImgPath());
 			temp.setTeam(listpo.get(i).getCurrentTeam());
 			
 			temp.setTime(0);
@@ -864,10 +854,10 @@ public class Data_Handler {
 	{
 		ArrayList<TeamPerformanceInSingleGame> tplist = new ArrayList<TeamPerformanceInSingleGame>();
 		GameDate dn = getDateNow();
-		for(GameVo temp:gamevo){
-			if(temp.getGameDate().compareTo(dn)==0){
-				tplist.add(temp.getGuestTP());
-				tplist.add(temp.getHomeTP());
+		for(int i=gamevo.size()-1;i>=0;i--){
+			if(gamevo.get(i).getGameDate().compareTo(dn)==0){
+				tplist.add(gamevo.get(i).getGuestTP());
+				tplist.add(gamevo.get(i).getHomeTP());
 			}
 		}
 		return tplist;
@@ -879,14 +869,15 @@ public class Data_Handler {
 	{
 		ArrayList<PlayerPerformanceInSingleGame> pplist = new ArrayList<PlayerPerformanceInSingleGame>();
 		GameDate dn = getDateNow();
-		for(GameVo temp:gamevo){
-			if(temp.getGameDate().compareTo(dn)==0){
-				for(PlayerPerformanceInSingleGame pp:temp.getGuestTP().getPlayerList()){
+		for(int i=gamevo.size()-1;i>=0;i--){
+			if(gamevo.get(i).getGameDate().compareTo(dn)==0){
+				for(PlayerPerformanceInSingleGame pp:gamevo.get(i).getGuestTP().getPlayerList()){
 					pplist.add(pp);
 				}
-				for(PlayerPerformanceInSingleGame pp:temp.getHomeTP().getPlayerList()){
+				for(PlayerPerformanceInSingleGame pp:gamevo.get(i).getHomeTP().getPlayerList()){
 					pplist.add(pp);
 				}
+				break;
 			}
 		}
 		return pplist;
@@ -962,8 +953,13 @@ public class Data_Handler {
 	}
 	public GameDate getDateNow(){
 		//st.setCurrentDate(new GameDate(2012,11,28));
-		st = systemdao.getStById("12-13");
-		return st.getCurrentDate();
+		GameDate date = new GameDate();
+		for(int i =gamevo.size()-1;i>=0;i++){
+			if(date.compareTo(gamevo.get(i).getGameDate())==-1){
+				date = gamevo.get(i).getGameDate();
+			}
+		}
+		return date;
 	}
 	
 	public GameDate getNextDate(GameDate date){
