@@ -19,7 +19,6 @@ public class TeamPO {
 	private Division division;
 	private String homeField;
 	private String birthYear;
-	private String imgPath;
 	
 	private ArrayList<String> currentPlayersNameList;//current
 	
@@ -66,12 +65,6 @@ public class TeamPO {
 	}
 	public void setBirthYear(String birthYear) {
 		this.birthYear = birthYear;
-	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 	public ArrayList<String> getCurrentPlayersNameList() {
 		return currentPlayersNameList;
