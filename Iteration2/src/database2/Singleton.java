@@ -19,7 +19,7 @@ public class Singleton {
 	private ArrayList<TeamPO> teamDB = new ArrayList<TeamPO>();
 	
 	private Singleton() {//private constructor
-		System.out.println("database initialized1");
+		System.out.println("database initialized");
 	}
 	
 	public static Singleton getInstance() {//static method to get an instance
