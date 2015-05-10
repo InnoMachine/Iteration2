@@ -23,7 +23,7 @@ import vo.TeamVo;
 public class Console {
 
 	BigDecimal b;
-	PrintStream out ;;
+	PrintStream out ;
 	Player_Handler player_handler;
 	Team_Handler team_handler;
 	public void execute(PrintStream out,String[] args){
@@ -38,7 +38,7 @@ public class Console {
 			}
 			String source = order.substring(i);
 			System.out.print(source);
-			DataFileReader.importAll(source+"\\players", source+"\\teams", source+"\\matches");
+			DataFileReader.importAll(source+"\\players\\info", source+"\\teams\\teams", source+"\\matches");
 			player_handler = new Player_Handler();
 			team_handler = new Team_Handler();
 			return;
