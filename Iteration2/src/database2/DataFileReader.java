@@ -35,10 +35,26 @@ public class DataFileReader {
 	private static Scanner scanner;
 	
 	public static void main(String[] args) {
-		importAll("CSEdata/players/info","CSEdata/teams/12-13teams","CSEdata/matches");
+		
+		importAll("CSEdata/players/info","CSEdata/teams/teams","CSEdata/matches");
 		System.out.println(DaoFactory.getPlayerDaoInstance().getAllPlayers());
 		System.out.println(DaoFactory.getGameDaoInstence().getAllGames());
 		System.out.println(DaoFactory.getTeamDaoInstance().getAllTeams());
+		
+		ArrayList<PlayerPO> players = DaoFactory.getPlayerDaoInstance().getAllPlayers();
+		ArrayList<GamePO> games = DaoFactory.getGameDaoInstence().getAllGames();
+		ArrayList<TeamPO> teams = DaoFactory.getTeamDaoInstance().getAllTeams();
+		
+		for (PlayerPO player: players) {
+			System.out.println(player.getName());
+		}
+		for (GamePO game: games) {
+			System.out.println(game.getGameLabel());
+		}
+		for (TeamPO team: teams) {
+			System.out.println(team.getAbbreviation());
+		}
+		
 	}
 	
 	public static void importAll(String playerPath, String teamPath, String gamePath) {
@@ -133,7 +149,9 @@ public class DataFileReader {
 	}
 
 	public static String splitKeyword(String originalString) {
-
+		StringBuffer sb = new StringBuffer(originalString);
+		sb.replace(0, 1, "");
+		originalString = new String(sb);
 		originalString = originalString.replace("╔", "");// teams
 		originalString = originalString.replace("╤", "");
 		originalString = originalString.replace("═", "");

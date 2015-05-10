@@ -5,8 +5,6 @@
  */
 package po;
 
-import java.util.ArrayList;
-
 import enums.Conference;
 import enums.Division;
 
@@ -19,11 +17,11 @@ public class TeamPO {
 	private Division division;
 	private String homeField;
 	private String birthYear;
-	
-	private ArrayList<String> currentPlayersNameList;//current
-	
-	private ArrayList<TeamPerformance> seansonTeamPerformance;//sudo
-	
+//	
+//	private ArrayList<String> currentPlayersNameList;//current
+//	
+//	private ArrayList<TeamPerformance> seansonTeamPerformance;//sudo
+//	
 	public String getTeamName() {
 		return teamName;
 	}
@@ -66,17 +64,17 @@ public class TeamPO {
 	public void setBirthYear(String birthYear) {
 		this.birthYear = birthYear;
 	}
-	public ArrayList<String> getCurrentPlayersNameList() {
-		return currentPlayersNameList;
-	}
-	public void setCurrentPlayersNameList(ArrayList<String> playersNameList) {
-		this.currentPlayersNameList = playersNameList;
-	}
-	public ArrayList<TeamPerformance> getSeansonTeamPerformance() {
-		return seansonTeamPerformance;
-	}
-	public void setSeansonTeamPerformance(ArrayList<TeamPerformance> seansonTeamPerformance) {
-		this.seansonTeamPerformance = seansonTeamPerformance;
-	}
+//	public ArrayList<String> getCurrentPlayersNameList() {
+//		return currentPlayersNameList;
+//	}
+//	public void setCurrentPlayersNameList(ArrayList<String> playersNameList) {
+//		this.currentPlayersNameList = playersNameList;
+//	}
+//	public ArrayList<TeamPerformance> getSeansonTeamPerformance() {
+//		return seansonTeamPerformance;
+//	}
+//	public void setSeansonTeamPerformance(ArrayList<TeamPerformance> seansonTeamPerformance) {
+//		this.seansonTeamPerformance = seansonTeamPerformance;
+//	}
 	
 }
