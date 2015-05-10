@@ -12,9 +12,6 @@ public class PlayerVo {
 	private int age;
 	private int exp;
 	private String school;
-	private String ActionImgPath;
-	private String PortraitImgPath;
-	
 	private Division div;
 	
 	private String name;
@@ -149,18 +146,7 @@ public class PlayerVo {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public String getActionImgPath() {
-		return ActionImgPath;
-	}
-	public void setActionImgPath(String actionImgPath) {
-		ActionImgPath = actionImgPath;
-	}
-	public String getPortraitImgPath() {
-		return PortraitImgPath;
-	}
-	public void setPortraitImgPath(String portraitImgPath) {
-		PortraitImgPath = portraitImgPath;
-	}
+
 	
 	
 	

@@ -12,7 +12,6 @@ public class TeamVo {
 	private Division division;
 	private String homeField;
 	private String birthYear;
-	private String imgPath;
 	
 	private int time;//sudo
 	private int winningNum;
@@ -110,12 +109,6 @@ public class TeamVo {
 	}
 	public void setBirthYear(String birthYear) {
 		this.birthYear = birthYear;
-	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 	public int getTime() {
 		return time;

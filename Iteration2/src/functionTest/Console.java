@@ -4,9 +4,6 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import businessLogic.Player_BL;
-import businessLogic.Player_BS;
 import businessLogic.Player_Handler;
 import businessLogic.Team_Handler;
 import test.data.PlayerHighInfo;
@@ -23,265 +20,274 @@ import vo.TeamVo;
 
 public class Console {
 
-	BigDecimal b; 
+	BigDecimal b;
+	PrintStream out ;;
 	Player_Handler player_handler = new Player_Handler();
 	Team_Handler team_handler = new Team_Handler();
-	Player_BS player_bs = new Player_BL();
 	public void execute(PrintStream out,String[] args){
-		for(int i = 0;i<args.length;i++){
-			String order = args[i];
-			if(order.contains("player")){
-				int n =50;
-				if(order.contains("-n")){
-					int k = order.indexOf("-n");
-					String s1 = order.substring(k+3);
-					if(s1.contains("-")){
-						int p =s1.indexOf("-");
-						s1 = s1.substring(0, p-1);
-					}
-					n=Integer.parseInt(s1);
+		this.out = out;
+		System.setOut(out);
+		String order = args[0];
+		if(args[0].contains("datasource")){
+			int i=order.indexOf("datasource");
+			i=i+10;
+			while(order.substring(i, i+1).equals(" ")){
+				i++;
+			}
+			String source = order.substring(i);
+			return;
+		}
+		
+		if(order.contains("player")){
+			int n =50;
+			if(order.contains("-n")){
+				int k = order.indexOf("-n");
+				String s1 = order.substring(k+3);
+				if(s1.contains("-")){
+					int p =s1.indexOf("-");
+					s1 = s1.substring(0, p-1);
 				}
-				if(order.contains("-king")){
-					int k =order.indexOf("-king");
-					String s = order.substring(k+6);
-					String field = s.substring(0, s.indexOf("-")-1);
-					if(s.contains("-season")){
-						ArrayList<PlayerKingInfo> ob= SetKingInfo(field,true);
-						for(int p =0;p<ob.size();p++){
-							out.println(p+1);
-							out.println(ob.get(p).toString());
-						}
-					}else{
-						ArrayList<PlayerKingInfo> ob= SetKingInfo(field,false);
-						for(int p =0;p<ob.size();p++){
-							out.println(p+1);
-							out.println(ob.get(p).toString());
-						}
+				n=Integer.parseInt(s1);
+			}
+			if(order.contains("-king")){
+				int k =order.indexOf("-king");
+				String s = order.substring(k+6);
+				String field = s.substring(0, s.indexOf("-")-1);
+				if(s.contains("-season")){
+					ArrayList<PlayerKingInfo> ob= SetKingInfo(field,true);
+					for(int p =0;p<ob.size();p++){
+						out.println(p+1);
+						out.println(ob.get(p).toString());
 					}
-				}
-				else if(order.contains("-hot")){
-					int k =order.indexOf("-hot");
-					String s = order.substring(k+5);
-					String field;
-					if(s.contains("-")){
-						field = s.substring(0, s.indexOf("-")-1);
-					}else{
-						field = s.substring(0);
-					}
-					ArrayList<PlayerHotInfo> ob= SetHotInfo(field,n);
+				}else{
+					ArrayList<PlayerKingInfo> ob= SetKingInfo(field,false);
 					for(int p =0;p<ob.size();p++){
 						out.println(p+1);
 						out.println(ob.get(p).toString());
 					}
 				}
-				else if(order.contains("-sort")){
-					ArrayList<PlayerVo> listvo = null ;
-					ArrayList<PlayerVo> list = null ;
+			}
+			else if(order.contains("-hot")){
+				int k =order.indexOf("-hot");
+				String s = order.substring(k+5);
+				String field;
+				if(s.contains("-")){
+					field = s.substring(0, s.indexOf("-")-1);
+				}else{
+					field = s.substring(0);
+				}
+				ArrayList<PlayerHotInfo> ob= SetHotInfo(field,n);
+				for(int p =0;p<ob.size();p++){
+					out.println(p+1);
+					out.println(ob.get(p).toString());
+				}
+			}
+			else if(order.contains("-sort")){
+				ArrayList<PlayerVo> listvo = null ;
+				ArrayList<PlayerVo> list = null ;
+				int k=order.indexOf("-sort");
+				String s = order.substring(k+6);
+				if(s.contains("-")){
+					s = s.substring(0,s.indexOf("-")-1);
+				}
+				String field = s.substring(0,s.indexOf("."));
+				String sortorder = s.substring(s.indexOf("."));
+				if(!s.contains(",")){
+					playerSortFieldTrans(field);
+					listvo = player_handler.sortPlayerBy(field);
+				}
+				else{
+					k=s.indexOf(",");
+					String s2 = s.substring(k+1);
+					String field2 = s2.substring(0,s2.indexOf("."));
+					String sortorder2 = s2.substring(s2.indexOf("."));
+					playerSortFieldTrans(field);
+					playerSortFieldTrans(field2);
+					boolean issame = true;
+					if(!sortorder.equals(sortorder2))
+						issame =false;
+					listvo = player_handler.sortPlayerBy(field, field2, issame);
+				}
+				if(!sortorder.equals("desc"))
+				{
+					Collections.reverse(listvo);
+				}
+				
+				if(!order.contains("-high")){
+					if(order.contains("-filter")){
+						k=order.indexOf("-filter");
+						String position ="All";
+						String league = "All";
+						String age = "All";
+						s = order.substring(k+8);
+						if(s.contains("-")){
+							s = s.substring(0,s.indexOf("-")-1);
+						}
+						if(s.contains("position")){
+							field = s.substring(0,s.indexOf("."));
+							String value = s.substring(s.indexOf("."));
+							if(!s.contains(",")){
+								position = value;
+							}
+							else{
+								value.substring(0, value.indexOf(",")-1);
+								position = value;
+							}
+						}
+						if(s.contains("league")){
+							field = s.substring(0,s.indexOf("."));
+							String value = s.substring(s.indexOf("."));
+							if(!s.contains(",")){
+								league = value;
+							}
+							else{
+								value.substring(0, value.indexOf(",")-1);
+								league = value;
+							}
+						}
+						if(s.contains("age")){
+							field = s.substring(0,s.indexOf("."));
+							String value = s.substring(s.indexOf("."));
+							if(!s.contains(",")){
+								age = value;
+							}
+							else{
+								value.substring(0, value.indexOf(",")-1);
+								age = value;
+							}
+						}
+						list = filterList(listvo,position,league,age);
+					}
+					if(order.contains("-total")){
+						ArrayList<PlayerNormalInfo> ob= CreateTotalPlayerNormalInfo(list,n);
+						for(int p =0;p<ob.size();p++){
+							out.println(p+1);
+							out.println(ob.get(p).toString());
+						}	
+					}
+					else{
+						ArrayList<PlayerNormalInfo> ob= CreateAvgPlayerNormalInfo(list,n);
+						for(int p =0;p<ob.size();p++){
+							out.println(p+1);
+							out.println(ob.get(p).toString());
+						}
+					}
+					
+					
+				}
+				else{
+					if(order.contains("-total")){
+						ArrayList<PlayerHighInfo> ob= CreateTotalPlayerHighInfo(listvo,n);
+						for(int p =0;p<ob.size();p++){
+							out.println(p+1);
+							out.println(ob.get(p).toString());
+						}
+					}
+					else{
+						ArrayList<PlayerHighInfo> ob= CreateAvgPlayerHighInfo(listvo,n);
+						for(int p =0;p<ob.size();p++){
+							out.println(p+1);
+							out.println(ob.get(p).toString());
+						}
+					}
+				}
+			}
+			
+			
+		}
+		else if(order.contains("team")){
+			int n =30;
+			String field ="";
+			String sortorder="";
+			ArrayList<TeamVo> listvo = null ;
+			ArrayList<TeamVo> list = null ;
+			if(order.contains("-hot")){
+				int k =order.indexOf("-hot");
+				String s = order.substring(k+5);
+				if(s.contains("-")){
+					field = s.substring(0, s.indexOf("-")-1);
+				}else{
+					field = s.substring(0);
+				}
+				ArrayList<TeamHotInfo> ob= SetTeamHotInfo(field,n);
+				for(int p =0;p<ob.size();p++){
+					out.println(p+1);
+					out.println(ob.get(p).toString());
+				}
+			}
+			else if(!order.contains("-high")){
+				
+				if(order.contains("-sort")){
 					int k=order.indexOf("-sort");
 					String s = order.substring(k+6);
 					if(s.contains("-")){
 						s = s.substring(0,s.indexOf("-")-1);
 					}
-					String field = s.substring(0,s.indexOf("."));
-					String sortorder = s.substring(s.indexOf("."));
-					if(!s.contains(",")){
-						playerSortFieldTrans(field);
-						listvo = player_handler.sortPlayerBy(field);
-					}
-					else{
-						k=s.indexOf(",");
-						String s2 = s.substring(k+1);
-						String field2 = s2.substring(0,s2.indexOf("."));
-						String sortorder2 = s2.substring(s2.indexOf("."));
-						playerSortFieldTrans(field);
-						playerSortFieldTrans(field2);
-						boolean issame = true;
-						if(!sortorder.equals(sortorder2))
-							issame =false;
-						listvo = player_handler.sortPlayerBy(field, field2, issame);
-					}
-					if(!sortorder.equals("desc"))
-					{
-						Collections.reverse(listvo);
-					}
-					
-					if(!order.contains("-high")){
-						if(order.contains("-filter")){
-							k=order.indexOf("-filter");
-							String position ="All";
-							String league = "All";
-							String age = "All";
-							s = order.substring(k+8);
-							if(s.contains("-")){
-								s = s.substring(0,s.indexOf("-")-1);
-							}
-							if(s.contains("position")){
-								field = s.substring(0,s.indexOf("."));
-								String value = s.substring(s.indexOf("."));
-								if(!s.contains(",")){
-									position = value;
-								}
-								else{
-									value.substring(0, value.indexOf(",")-1);
-									position = value;
-								}
-							}
-							if(s.contains("league")){
-								field = s.substring(0,s.indexOf("."));
-								String value = s.substring(s.indexOf("."));
-								if(!s.contains(",")){
-									league = value;
-								}
-								else{
-									value.substring(0, value.indexOf(",")-1);
-									league = value;
-								}
-							}
-							if(s.contains("age")){
-								field = s.substring(0,s.indexOf("."));
-								String value = s.substring(s.indexOf("."));
-								if(!s.contains(",")){
-									age = value;
-								}
-								else{
-									value.substring(0, value.indexOf(",")-1);
-									age = value;
-								}
-							}
-							list = filterList(listvo,position,league,age);
-						}
-						if(order.contains("-total")){
-							ArrayList<PlayerNormalInfo> ob= CreateTotalPlayerNormalInfo(list,n);
-							for(int p =0;p<ob.size();p++){
-								out.println(p+1);
-								out.println(ob.get(p).toString());
-							}	
-						}
-						else{
-							ArrayList<PlayerNormalInfo> ob= CreateAvgPlayerNormalInfo(list,n);
-							for(int p =0;p<ob.size();p++){
-								out.println(p+1);
-								out.println(ob.get(p).toString());
-							}
-						}
-						
-						
-					}
-					else{
-						if(order.contains("-total")){
-							ArrayList<PlayerHighInfo> ob= CreateTotalPlayerHighInfo(listvo,n);
-							for(int p =0;p<ob.size();p++){
-								out.println(p+1);
-								out.println(ob.get(p).toString());
-							}
-						}
-						else{
-							ArrayList<PlayerHighInfo> ob= CreateAvgPlayerHighInfo(listvo,n);
-							for(int p =0;p<ob.size();p++){
-								out.println(p+1);
-								out.println(ob.get(p).toString());
-							}
-						}
-					}
+					field = s.substring(0,s.indexOf("."));
+					sortorder = s.substring(s.indexOf("."));
 				}
-				
-				
-			}
-			else if(order.contains("team")){
-				int n =30;
-				String field ="";
-				String sortorder="";
-				ArrayList<TeamVo> listvo = null ;
-				ArrayList<TeamVo> list = null ;
-				if(order.contains("-hot")){
-					int k =order.indexOf("-hot");
-					String s = order.substring(k+5);
-					if(s.contains("-")){
-						field = s.substring(0, s.indexOf("-")-1);
-					}else{
-						field = s.substring(0);
-					}
-					ArrayList<TeamHotInfo> ob= SetTeamHotInfo(field,n);
+				else{
+					field = "score";
+					sortorder ="desc";
+				}
+				TeamSortFieldTrans(field);
+				list = team_handler.sortTeamBy(field);
+				if(!sortorder.equals("desc"))
+				{
+					Collections.reverse(listvo);
+				}
+				if(order.contains("-total")){
+					ArrayList<TeamHighInfo> ob= CreateTotalTeamHighInfo(list,n);
 					for(int p =0;p<ob.size();p++){
 						out.println(p+1);
 						out.println(ob.get(p).toString());
 					}
 				}
-				else if(!order.contains("-high")){
-					
-					if(order.contains("-sort")){
-						int k=order.indexOf("-sort");
-						String s = order.substring(k+6);
-						if(s.contains("-")){
-							s = s.substring(0,s.indexOf("-")-1);
-						}
-						field = s.substring(0,s.indexOf("."));
-						sortorder = s.substring(s.indexOf("."));
-					}
-					else{
-						field = "score";
-						sortorder ="desc";
-					}
-					TeamSortFieldTrans(field);
-					list = team_handler.sortTeamBy(field);
-					if(!sortorder.equals("desc"))
-					{
-						Collections.reverse(listvo);
-					}
-					if(order.contains("-total")){
-						ArrayList<TeamHighInfo> ob= CreateTotalTeamHighInfo(list,n);
-						for(int p =0;p<ob.size();p++){
-							out.println(p+1);
-							out.println(ob.get(p).toString());
-						}
-					}
-					else{
-						ArrayList<TeamHighInfo> ob= CreateAvgTeamHighInfo(list,n);
-						for(int p =0;p<ob.size();p++){
-							out.println(p+1);
-							out.println(ob.get(p).toString());
-						}
-						}
-					}
 				else{
-					if(order.contains("-sort")){
-						int k=order.indexOf("-sort");
-						String s = order.substring(k+6);
-						if(s.contains("-")){
-							s = s.substring(0,s.indexOf("-")-1);
-						}
-						field = s.substring(0,s.indexOf("."));
-						sortorder = s.substring(s.indexOf("."));
+					ArrayList<TeamHighInfo> ob= CreateAvgTeamHighInfo(list,n);
+					for(int p =0;p<ob.size();p++){
+						out.println(p+1);
+						out.println(ob.get(p).toString());
 					}
-					else{
-						field = "winRate";
-						sortorder ="desc";
 					}
-					TeamSortFieldTrans(field);
-					list = team_handler.sortTeamBy(field);
-					if(!sortorder.equals("desc"))
-					{
-						Collections.reverse(listvo);
-					}
-					if(order.contains("-total")){
-						ArrayList<TeamNormalInfo> ob= CreateTotalTeamNormalInfo(list,n);
-						for(int p =0;p<ob.size();p++){
-							out.println(p+1);
-							out.println(ob.get(p).toString());
-						}
-					}
-					else{
-						ArrayList<TeamNormalInfo> ob= CreateAvgTeamNormalInfo(list,n);
-						for(int p =0;p<ob.size();p++){
-							out.println(p+1);
-							out.println(ob.get(p).toString());
-						}
-					}
-					
-					
 				}
+			else{
+				if(order.contains("-sort")){
+					int k=order.indexOf("-sort");
+					String s = order.substring(k+6);
+					if(s.contains("-")){
+						s = s.substring(0,s.indexOf("-")-1);
+					}
+					field = s.substring(0,s.indexOf("."));
+					sortorder = s.substring(s.indexOf("."));
+				}
+				else{
+					field = "winRate";
+					sortorder ="desc";
+				}
+				TeamSortFieldTrans(field);
+				list = team_handler.sortTeamBy(field);
+				if(!sortorder.equals("desc"))
+				{
+					Collections.reverse(listvo);
+				}
+				if(order.contains("-total")){
+					ArrayList<TeamNormalInfo> ob= CreateTotalTeamNormalInfo(list,n);
+					for(int p =0;p<ob.size();p++){
+						out.println(p+1);
+						out.println(ob.get(p).toString());
+					}
+				}
+				else{
+					ArrayList<TeamNormalInfo> ob= CreateAvgTeamNormalInfo(list,n);
+					for(int p =0;p<ob.size();p++){
+						out.println(p+1);
+						out.println(ob.get(p).toString());
+					}
+				}
+				
+				
 			}
-			
 		}
 		}
 	
