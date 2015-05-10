@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import database2.DataFileReader;
 import businessLogic.Player_Handler;
 import businessLogic.Team_Handler;
 import test.data.PlayerHighInfo;
@@ -22,8 +24,8 @@ public class Console {
 
 	BigDecimal b;
 	PrintStream out ;;
-	Player_Handler player_handler = new Player_Handler();
-	Team_Handler team_handler = new Team_Handler();
+	Player_Handler player_handler;
+	Team_Handler team_handler;
 	public void execute(PrintStream out,String[] args){
 		this.out = out;
 		System.setOut(out);
@@ -35,6 +37,10 @@ public class Console {
 				i++;
 			}
 			String source = order.substring(i);
+			System.out.print(source);
+			DataFileReader.importAll(source+"\\players", source+"\\teams", source+"\\matches");
+			player_handler = new Player_Handler();
+			team_handler = new Team_Handler();
 			return;
 		}
 		

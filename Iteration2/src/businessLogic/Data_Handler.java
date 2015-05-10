@@ -915,42 +915,7 @@ public class Data_Handler {
 		
 	}
 
-	public void updateData() {
-		ArrayList<GamePO> ngs = gamedao.getNewGamePOs();
-		for(int i=0;i<ngs.size();i++)
-		{
-			GameVo game = new GameVo();
-			TeamPerformance tpg = ngs.get(i).getGuestTP();
-			TeamPerformance tph = ngs.get(i).getHomeTP();
-			TeamPerformanceInSingleGame tgpg=setPerformance(tpg);
-			TeamPerformanceInSingleGame tgph=setPerformance(tph);
-			tgpg.setOpDefensiveRebound(tgph.getDefensiveRebound());
-			tgpg.setOpOffensiveRebound(tgph.getOffensiveRebound());
-			tgpg.setOpTwoPointShotNum(tgph.getShotNum()-tgph.getThreePointShotNum());
-			tgpg.setOpScore(tgph.getScore());
-			tgpg.CalculateRoundAttack();
-			tgph.setOpDefensiveRebound(tgpg.getDefensiveRebound());
-			tgph.setOpOffensiveRebound(tgpg.getOffensiveRebound());
-			tgph.setOpTwoPointShotNum(tgpg.getShotNum()-tgpg.getThreePointShotNum());
-			tgph.setOpScore(tgpg.getScore());
-			tgph.CalculateRoundAttack();
-			tgph.isWinning();
-			tgpg.isWinning();
-			tgpg.setOpRoundAttack(tgph.getRoundAttack());
-			tgph.setOpRoundAttack(tgpg.getRoundAttack());
-			playerVoPSet(tgpg);
-			playerVoPSet(tgph);
-			teamVoPSet(tgpg);
-			teamVoPSet(tgph);
-			TGPRateSet(tgph);
-			TGPRateSet(tgpg);
-			
-			CreateGameVo(game,tgpg,tgph,ngs.get(i));
-			gamevo.add(game);
-		}
-		playerCalculate();
-		TeamCalculate();
-	}
+	
 	public GameDate getDateNow(){
 		//st.setCurrentDate(new GameDate(2012,11,28));
 		GameDate date = new GameDate();
