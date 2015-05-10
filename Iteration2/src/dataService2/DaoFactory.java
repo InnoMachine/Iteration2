@@ -19,8 +19,4 @@ public class DaoFactory {
 		return new TeamDaoImpl();
 	}
 	
-	public static SystemDao getSystemDaoInstance() {
-		return new SystemDaoImpl();
-	}
-	
 }

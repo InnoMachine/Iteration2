@@ -18,8 +18,6 @@ public class PlayerPO {
 	private int age;//
 	private int exp;//
 	private String school;
-	private String ActionImgPath;
-	private String PortraitImgPath;
 	
 	private String currentTeam;//
 	
@@ -78,18 +76,6 @@ public class PlayerPO {
 	}
 	public void setPosition(String position) {
 		this.position = position;
-	}
-	public String getActionImgPath() {
-		return ActionImgPath;
-	}
-	public void setActionImgPath(String actionImgPath) {
-		ActionImgPath = actionImgPath;
-	}
-	public String getPortraitImgPath() {
-		return PortraitImgPath;
-	}
-	public void setPortraitImgPath(String portraitImgPath) {
-		PortraitImgPath = portraitImgPath;
 	}
 	public ArrayList<SinglePerformance> getSeasonSinglePerformance() {
 		return seasonSinglePerformance;
