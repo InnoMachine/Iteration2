@@ -5,8 +5,6 @@
  */
 package po;
 
-import java.util.ArrayList;
-
 public class PlayerPO {
 	
 	private String name;
@@ -19,9 +17,9 @@ public class PlayerPO {
 	private int exp;//
 	private String school;
 	
-	private String currentTeam;//
-	
-	private ArrayList<SinglePerformance> seasonSinglePerformance;
+//	private String currentTeam;//
+//	
+//	private ArrayList<SinglePerformance> seasonSinglePerformance;
 	
 	public String getName() {
 		return name;
@@ -77,17 +75,17 @@ public class PlayerPO {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public ArrayList<SinglePerformance> getSeasonSinglePerformance() {
-		return seasonSinglePerformance;
-	}
-	public void setSeasonSinglePerformance(ArrayList<SinglePerformance> seasonSinglePerformance) {
-		this.seasonSinglePerformance = seasonSinglePerformance;
-	}
-	public String getCurrentTeam() {
-		return currentTeam;
-	}
-	public void setCurrentTeam(String currentTeam) {
-		this.currentTeam = currentTeam;
-	}
+//	public ArrayList<SinglePerformance> getSeasonSinglePerformance() {
+//		return seasonSinglePerformance;
+//	}
+//	public void setSeasonSinglePerformance(ArrayList<SinglePerformance> seasonSinglePerformance) {
+//		this.seasonSinglePerformance = seasonSinglePerformance;
+//	}
+//	public String getCurrentTeam() {
+//		return currentTeam;
+//	}
+//	public void setCurrentTeam(String currentTeam) {
+//		this.currentTeam = currentTeam;
+//	}
 	
 }
