@@ -754,7 +754,6 @@ public class Data_Handler {
 			temp.setDivision(teamlistpo.get(i).getDivision());
 			temp.setHomeField(teamlistpo.get(i).getHomeField());
 			temp.setBirthYear(teamlistpo.get(i).getBirthYear());
-			temp.setImgPath(teamlistpo.get(i).getImgPath());
 			
 			
 			temp.setTime(0);
@@ -804,8 +803,6 @@ public class Data_Handler {
 			temp.setAge(listpo.get(i).getAge());
 			temp.setExp(listpo.get(i).getExp());
 			temp.setSchool(listpo.get(i).getSchool());
-			temp.setActionImgPath(listpo.get(i).getActionImgPath());
-			temp.setPortraitImgPath(listpo.get(i).getPortraitImgPath());
 			temp.setTeam(listpo.get(i).getCurrentTeam());
 			
 			temp.setTime(0);
