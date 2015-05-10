@@ -149,7 +149,9 @@ public class DataFileReader {
 	}
 
 	public static String splitKeyword(String originalString) {
-
+		StringBuffer sb = new StringBuffer(originalString);
+		sb.replace(0, 1, "");
+		originalString = new String(sb);
 		originalString = originalString.replace("╔", "");// teams
 		originalString = originalString.replace("╤", "");
 		originalString = originalString.replace("═", "");
