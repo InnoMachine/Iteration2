@@ -4,9 +4,6 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import businessLogic.Player_BL;
-import businessLogic.Player_BS;
 import businessLogic.Player_Handler;
 import businessLogic.Team_Handler;
 import test.data.PlayerHighInfo;
@@ -27,7 +24,6 @@ public class Console {
 	PrintStream out ;;
 	Player_Handler player_handler = new Player_Handler();
 	Team_Handler team_handler = new Team_Handler();
-	Player_BS player_bs = new Player_BL();
 	public void execute(PrintStream out,String[] args){
 		this.out = out;
 		System.setOut(out);
