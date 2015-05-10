@@ -132,14 +132,14 @@ public class Data_Handler {
 		double r = temp.getDefensiveRebound()/(double)(temp.getDefensiveRebound()+temp.getOpOffensiveRebound());
 		b = new BigDecimal(r);
 		double f = b.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();  
-		temp.setReboundEfficiency(f);
+		temp.setDefensiveReboundEfficiency(f);
 	}
 
 	private void TeamSetOffensiveReboundEfficiency(TeamVo temp) {
 		double r = temp.getOffensiveRebound()/(double)(temp.getOffensiveRebound()+temp.getDefensiveRebound());
 		b = new BigDecimal(r);
 		double f = b.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();  
-		temp.setReboundEfficiency(f);
+		temp.setOffensiveReboundEfficiency(f);
 	}
 
 	private void SetTeamRoundAttack(TeamVo temp) {
@@ -398,7 +398,6 @@ public class Data_Handler {
 		double g =(double)(2*((double)temp.getShotNum()+temp.getThreePointShotNum()+0.44
 				*temp.getFreeThrowShotNum()));
 		double r=0;
-		if(r!=0)
 			r = temp.getScore()/g;
 		b = new BigDecimal(r);
 		double f = b.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue();  
@@ -919,7 +918,7 @@ public class Data_Handler {
 	public GameDate getDateNow(){
 		//st.setCurrentDate(new GameDate(2012,11,28));
 		GameDate date = new GameDate();
-		for(int i =gamevo.size()-1;i>=0;i++){
+		for(int i =gamevo.size()-1;i>=0;i--){
 			if(date.compareTo(gamevo.get(i).getGameDate())==-1){
 				date = gamevo.get(i).getGameDate();
 			}

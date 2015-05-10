@@ -29,7 +29,12 @@ public class Console {
 	public void execute(PrintStream out,String[] args){
 		this.out = out;
 		System.setOut(out);
-		String order = args[0];
+		String order="";
+		for(int i=0;i<args.length-1;i++){
+			order+=args[i];
+			order+=" ";
+		}
+		order+=args[args.length-1];
 		if(args[0].contains("datasource")){
 			int i=order.indexOf("datasource");
 			i=i+10;
@@ -38,7 +43,7 @@ public class Console {
 			}
 			String source = order.substring(i);
 			System.out.print(source);
-			DataFileReader.importAll(source+"\\players\\info", source+"\\teams\\teams", source+"\\matches");
+			DataFileReader.importAll(source+"\\players\\info", source+"\\teams\\12-13teams", source+"\\matches");
 			player_handler = new Player_Handler();
 			team_handler = new Team_Handler();
 			return;
@@ -52,6 +57,9 @@ public class Console {
 				if(s1.contains("-")){
 					int p =s1.indexOf("-");
 					s1 = s1.substring(0, p-1);
+				}
+				if(s1.contains(" ")){
+					s1=s1.substring(0,s1.indexOf(" "));
 				}
 				n=Integer.parseInt(s1);
 			}
@@ -82,41 +90,65 @@ public class Console {
 				}else{
 					field = s.substring(0);
 				}
+				
 				ArrayList<PlayerHotInfo> ob= SetHotInfo(field,n);
 				for(int p =0;p<ob.size();p++){
 					out.println(p+1);
 					out.println(ob.get(p).toString());
 				}
 			}
-			else if(order.contains("-sort")){
+			else{
 				ArrayList<PlayerVo> listvo = null ;
 				ArrayList<PlayerVo> list = null ;
-				int k=order.indexOf("-sort");
-				String s = order.substring(k+6);
-				if(s.contains("-")){
-					s = s.substring(0,s.indexOf("-")-1);
-				}
-				String field = s.substring(0,s.indexOf("."));
-				String sortorder = s.substring(s.indexOf("."));
-				if(!s.contains(",")){
-					playerSortFieldTrans(field);
-					listvo = player_handler.sortPlayerBy(field);
+				int k=0;
+				String field ="";
+				String s="";
+				String sortorder ="";
+				if(order.contains("-sort")){
+					
+					k=order.indexOf("-sort");
+					s = order.substring(k+6);
+					if(s.contains("-")){
+						s = s.substring(0,s.indexOf("-")-1);
+					}
+					field = s.substring(0,s.indexOf("."));
+					sortorder = s.substring(s.indexOf(".")+1);
+					if(sortorder.contains(" ")){
+						sortorder=sortorder.substring(0, sortorder.indexOf(" "));
+					}
+					if(!s.contains(",")){
+						field=playerSortFieldTrans(field);
+						listvo = player_handler.sortPlayerBy(field);
+					}
+					else{
+						k=s.indexOf(",");
+						String s2 = s.substring(k+1);
+						String field2 = s2.substring(0,s2.indexOf("."));
+						String sortorder2 = s2.substring(s2.indexOf("."));
+						playerSortFieldTrans(field);
+						playerSortFieldTrans(field2);
+						boolean issame = true;
+						if(!sortorder.equals(sortorder2))
+							issame =false;
+						listvo = player_handler.sortPlayerBy(field, field2, issame);
+					}
+					if(!sortorder.equals("desc"))
+					{
+						Collections.reverse(listvo);
+					}
 				}
 				else{
-					k=s.indexOf(",");
-					String s2 = s.substring(k+1);
-					String field2 = s2.substring(0,s2.indexOf("."));
-					String sortorder2 = s2.substring(s2.indexOf("."));
-					playerSortFieldTrans(field);
-					playerSortFieldTrans(field2);
-					boolean issame = true;
-					if(!sortorder.equals(sortorder2))
-						issame =false;
-					listvo = player_handler.sortPlayerBy(field, field2, issame);
-				}
-				if(!sortorder.equals("desc"))
-				{
-					Collections.reverse(listvo);
+					if(!order.contains("-high")){
+						field="score";
+						sortorder = "desc";
+						playerSortFieldTrans(field);
+						listvo = player_handler.sortPlayerBy(field);
+					}else{
+						field="realShot";
+						sortorder = "desc";
+						playerSortFieldTrans(field);
+						listvo = player_handler.sortPlayerBy(field);
+					}
 				}
 				
 				if(!order.contains("-high")){
@@ -127,23 +159,36 @@ public class Console {
 						String age = "All";
 						s = order.substring(k+8);
 						if(s.contains("-")){
-							s = s.substring(0,s.indexOf("-")-1);
+							s = s.substring(0,s.indexOf(" "));
 						}
 						if(s.contains("position")){
-							field = s.substring(0,s.indexOf("."));
-							String value = s.substring(s.indexOf("."));
-							if(!s.contains(",")){
-								position = value;
+							String s1=s.substring(s.indexOf("position"));
+							if(s1.contains(",")){
+								s1=s1.substring(0, s1.indexOf(","));
+							}
+							field = "position";
+							String value = s1.substring(s1.indexOf(".")+1);
+							if(!s1.contains(",")){
+								if(value.indexOf(" ")!=-1){
+									position = value.substring(0, value.indexOf(" "));
+								}else {
+									position = value;
+								}
+								
 							}
 							else{
-								value.substring(0, value.indexOf(",")-1);
+								value = value.substring(0, value.indexOf(","));
 								position = value;
 							}
 						}
 						if(s.contains("league")){
-							field = s.substring(0,s.indexOf("."));
-							String value = s.substring(s.indexOf("."));
-							if(!s.contains(",")){
+							String s1=s.substring(s.indexOf("league"));
+							if(s1.contains(",")){
+								s1=s1.substring(0, s1.indexOf(","));
+							}
+							field = "league";
+							String value = s1.substring(s1.indexOf("league")+7);
+							if(!s1.contains(",")){
 								league = value;
 							}
 							else{
@@ -152,7 +197,11 @@ public class Console {
 							}
 						}
 						if(s.contains("age")){
-							field = s.substring(0,s.indexOf("."));
+							String s1=s.substring(s.indexOf("age"));
+							if(s1.contains(",")){
+								s1=s1.substring(0, s1.indexOf(","));
+							}
+							field = "age";
 							String value = s.substring(s.indexOf("."));
 							if(!s.contains(",")){
 								age = value;
@@ -164,6 +213,8 @@ public class Console {
 						}
 						list = filterList(listvo,position,league,age);
 					}
+					else
+						list = listvo;
 					if(order.contains("-total")){
 						ArrayList<PlayerNormalInfo> ob= CreateTotalPlayerNormalInfo(list,n);
 						for(int p =0;p<ob.size();p++){
@@ -201,17 +252,29 @@ public class Console {
 			
 			
 		}
+			
 		else if(order.contains("team")){
 			int n =30;
+			if(order.contains("-n")){
+				int k = order.indexOf("-n");
+				String s1 = order.substring(k+3);
+				if(s1.contains("-")){
+					int p =s1.indexOf("-");
+					s1 = s1.substring(0, p-1);
+				}
+				if(s1.contains(" ")){
+					s1=s1.substring(0,s1.indexOf(" "));
+				}
+				n=Integer.parseInt(s1);
+			}
 			String field ="";
 			String sortorder="";
-			ArrayList<TeamVo> listvo = null ;
 			ArrayList<TeamVo> list = null ;
 			if(order.contains("-hot")){
 				int k =order.indexOf("-hot");
 				String s = order.substring(k+5);
 				if(s.contains("-")){
-					field = s.substring(0, s.indexOf("-")-1);
+					field = s.substring(0, s.indexOf(" "));
 				}else{
 					field = s.substring(0);
 				}
@@ -230,17 +293,20 @@ public class Console {
 						s = s.substring(0,s.indexOf("-")-1);
 					}
 					field = s.substring(0,s.indexOf("."));
-					sortorder = s.substring(s.indexOf("."));
+					sortorder = s.substring(s.indexOf(".")+1);
+					if(sortorder.contains(" ")){
+						sortorder=sortorder.substring(0, sortorder.indexOf(" "));
+					}
 				}
 				else{
 					field = "score";
 					sortorder ="desc";
 				}
-				TeamSortFieldTrans(field);
+				field =TeamSortFieldTrans(field);
 				list = team_handler.sortTeamBy(field);
 				if(!sortorder.equals("desc"))
 				{
-					Collections.reverse(listvo);
+					Collections.reverse(list);
 				}
 				if(order.contains("-total")){
 					ArrayList<TeamHighInfo> ob= CreateTotalTeamHighInfo(list,n);
@@ -265,17 +331,20 @@ public class Console {
 						s = s.substring(0,s.indexOf("-")-1);
 					}
 					field = s.substring(0,s.indexOf("."));
-					sortorder = s.substring(s.indexOf("."));
+					sortorder = s.substring(s.indexOf(".")+1);
+					if(sortorder.contains(" ")){
+						sortorder=sortorder.substring(0, sortorder.indexOf(" "));
+					}
 				}
 				else{
 					field = "winRate";
 					sortorder ="desc";
 				}
-				TeamSortFieldTrans(field);
+				field =TeamSortFieldTrans(field);
 				list = team_handler.sortTeamBy(field);
 				if(!sortorder.equals("desc"))
 				{
-					Collections.reverse(listvo);
+					Collections.reverse(list);
 				}
 				if(order.contains("-total")){
 					ArrayList<TeamNormalInfo> ob= CreateTotalTeamNormalInfo(list,n);
@@ -297,7 +366,7 @@ public class Console {
 		}
 		}
 	
-	private void TeamSortFieldTrans(String f) {
+	private String TeamSortFieldTrans(String f) {
 		if(f.equals("point"))
 			f="score";
 		else if(f.equals("rebound"))
@@ -332,6 +401,7 @@ public class Console {
 			f="stealEfficiency";
 		else if(f.equals("assistEfficient"))
 			f="assistanceEfficiency";
+		return f;
 	}
 	private ArrayList<TeamNormalInfo> CreateAvgTeamNormalInfo(
 			ArrayList<TeamVo> list, int n) {
@@ -350,6 +420,8 @@ public class Console {
 			temp.setSteal(list.get(i).getStealField());
 			temp.setThree(list.get(i).getThreePointHitRate());
 			temp.setShot(list.get(i).getHitRate());
+			temp.setRebound(list.get(i).getReboundOverallField());
+			temp.setTeamName(list.get(i).getAbbreviation());
 			info.add(temp);
 		}
 		return info;
@@ -371,7 +443,7 @@ public class Console {
 			temp.setSteal(list.get(i).getSteal());
 			temp.setThree(list.get(i).getThreePointHitRate());
 			temp.setShot(list.get(i).getHitRate());
-			temp.setTeamName(list.get(i).getTeamName());
+			temp.setTeamName(list.get(i).getAbbreviation());
 			info.add(temp);
 		}
 		return info;
@@ -382,6 +454,7 @@ public class Console {
 		for(int i=0;i<n;i++){
 			TeamHighInfo temp = new TeamHighInfo();
 			temp.setWinRate(list.get(i).getWinningRate());
+			temp.setTeamName(list.get(i).getAbbreviation());
 			temp.setAssistEfficient(list.get(i).getAssistanceEfficiency());
 			temp.setDefendEfficient(list.get(i).getDefensiveEfficiency());
 			temp.setDefendReboundEfficient(list.get(i).getDefensiveReboundEfficiency());
@@ -406,6 +479,7 @@ public class Console {
 			temp.setOffendReboundEfficient(list.get(i).getOffensiveReboundEfficiency());
 			temp.setOffendRound(list.get(i).getRoundAttack());
 			temp.setStealEfficient(list.get(i).getStealEfficiency());
+			temp.setTeamName(list.get(i).getAbbreviation());
 			info.add(temp);
 		}
 		return info;
@@ -523,6 +597,7 @@ public class Console {
 			temp.setEfficiency(list.get(i).getEfficiencyField());
 			temp.setFault(list.get(i).getTurnoverField());
 			temp.setFoul(list.get(i).getFoulField());
+			temp.setRebound(list.get(i).getReboundOverallField());
 			b = new BigDecimal((double)list.get(i).getTimeField()/60);
 			temp.setMinute(b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 			temp.setName(list.get(i).getName());
@@ -551,6 +626,7 @@ public class Console {
 			temp.setEfficiency(list.get(i).getEfficiency());
 			temp.setFault(list.get(i).getTurnover());
 			temp.setFoul(list.get(i).getFoul());
+			temp.setRebound(list.get(i).getReboundOverall());
 			b = new BigDecimal((double)list.get(i).getTime()/60);
 			temp.setMinute(b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 			temp.setName(list.get(i).getName());
@@ -572,14 +648,16 @@ public class Console {
 		ArrayList<PlayerVo> list1 = new ArrayList<PlayerVo>();
 		ArrayList<PlayerVo> list2 = new ArrayList<PlayerVo>();
 		ArrayList<PlayerVo> list3 = new ArrayList<PlayerVo>();
+	
 		if(position.equals("All")){
 			for(PlayerVo temp:listvo){
 				list1.add(temp);
 			}
 		}else{
 			for(PlayerVo temp:listvo){
-				if(position.equals(temp.getPosition()))
-				list1.add(temp);
+				//System.out.println(temp.getPosition());
+				if(isPosition(temp, position))
+					list1.add(temp);
 			}
 		}
 		if(league.equals("All")){
@@ -587,7 +665,7 @@ public class Console {
 				list2.add(temp);
 			}
 		}else{
-			if(league.equals("West")){
+			if(league.equals("west")||league.equals("West")){
 				for(PlayerVo temp:list1){
 					String div = temp.getDivision()+"";
 					if(div.equals("SOUTHWEST")||div.equals("NORTHWEST")||div.equals("PACIFIC")){
@@ -595,7 +673,7 @@ public class Console {
 					}
 				}
 			}
-			else if(league.equals("East")){
+			else if(league.equals("east")||league.equals("East")){
 				for(PlayerVo temp:list1){
 					String div = temp.getDivision()+"";
 					if(div.equals("ATLANTIC")||div.equals("CENTRAL")||div.equals("SOUTHEAST")){
@@ -635,7 +713,7 @@ public class Console {
 		return list3;
 		
 	}
-	private void playerSortFieldTrans(String f) {
+	private String playerSortFieldTrans(String f) {
 		if(f.equals("point"))
 			f="score";
 		else if(f.equals("rebound"))
@@ -676,6 +754,7 @@ public class Console {
 			f="turnOverRate";
 		else if(f.equals("frequency"))
 			f="useRate";
+		return f;
 	}
 	private ArrayList<PlayerHotInfo> SetHotInfo(String field, int n) {
 		ArrayList<PlayerVo> list = player_handler.progressFastPlayerForTest(field);
@@ -754,7 +833,19 @@ public class Console {
 		
 		return k;
 	}
-	
+	private boolean isPosition(PlayerVo temp, String position) {
+		String p = temp.getPosition();
+		if(p.length()==1)
+		{
+			return p.equals(position);
+		}
+		else{
+			String first = p.substring(0, 1);
+			String right = p.substring(2, 3);
+			return first.equals(position)||right.equals(position);
+		}
+		
+	}
 }
 	
 

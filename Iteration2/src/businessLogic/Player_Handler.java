@@ -1418,7 +1418,7 @@ public class Player_Handler {
 	
 	public ArrayList<PlayerVo> progressFastPlayerForTest(String option){
 		CalculateProgress();
-		if(option.equals("scoreFieldProgress")){
+		if(option.equals("score")){
 			double a[][] = new double [listvo.size()][2]; 
 			for(int i=0;i<listvo.size();i++)
 			{
@@ -1432,7 +1432,7 @@ public class Player_Handler {
 				templist.add(listvo.get((int)a[i][1]));
 			}
 			return templist;
-		}else if(option.equals("reboundOverallFieldProgress")){
+		}else if(option.equals("rebound")){
 			double a[][] = new double [listvo.size()][2]; 
 			for(int i=0;i<listvo.size();i++)
 			{
@@ -1446,7 +1446,7 @@ public class Player_Handler {
 				templist.add(listvo.get((int)a[i][1]));
 			}
 			return templist;
-		}else if(option.equals("assistanceFieldProgress")){
+		}else if(option.equals("assist")){
 			double a[][] = new double [listvo.size()][2]; 
 			for(int i=0;i<listvo.size();i++)
 			{
