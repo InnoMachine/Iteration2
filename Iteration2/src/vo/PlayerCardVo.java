@@ -13,8 +13,6 @@ public class PlayerCardVo {
 	private int age;
 	private int exp;
 	private String school;
-	private String ActionImgPath;
-	private String PortraitImgPath;
 	private String sortOption;
 	private double sortvalue;
 	private String Team;
@@ -34,8 +32,6 @@ public class PlayerCardVo {
 		this.birth = vo.getBirth();
 		this.exp = vo.getExp();
 		this.school = vo.getSchool();
-		this.ActionImgPath =vo.getActionImgPath();
-		this.PortraitImgPath = vo.getPortraitImgPath();
 		this.sortProgress = progress;
 		this.sortOption = option;
 		this.Team=vo.getTeam();
@@ -150,8 +146,6 @@ public class PlayerCardVo {
 		this.birth = vo.getBirth();
 		this.exp = vo.getExp();
 		this.school = vo.getSchool();
-		this.ActionImgPath =vo.getActionImgPath();
-		this.PortraitImgPath = vo.getPortraitImgPath();
 		this.sortProgress = 0;
 		this.sortOption = option;
 		this.Team=vo.getTeam();
@@ -302,18 +296,6 @@ public class PlayerCardVo {
 	}
 	public void setPosition(String position) {
 		this.position = position;
-	}
-	public String getActionImgPath() {
-		return ActionImgPath;
-	}
-	public void setActionImgPath(String actionImgPath) {
-		ActionImgPath = actionImgPath;
-	}
-	public String getPortraitImgPath() {
-		return PortraitImgPath;
-	}
-	public void setPortraitImgPath(String portraitImgPath) {
-		PortraitImgPath = portraitImgPath;
 	}
 	public String getSortOption() {
 		return sortOption;

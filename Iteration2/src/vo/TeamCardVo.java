@@ -11,7 +11,6 @@ public class TeamCardVo {
 	private Division division;
 	private String homeField;
 	private String birthYear;
-	private String imgPath;
 	private String sortOption;
 	private double sortValue;
 	
@@ -29,7 +28,6 @@ public class TeamCardVo {
 		this.division =vo.getDivision();
 		this.homeField =vo.getHomeField();
 		this.birthYear =vo.getBirthYear();
-		this.imgPath =vo.getImgPath();
 		this.sortOption = option;
 		if(option.equals("GameNum")){
 			sortValue = vo.getGameNum();
@@ -158,12 +156,6 @@ public class TeamCardVo {
 	}
 	public void setBirthYear(String birthYear) {
 		this.birthYear = birthYear;
-	}
-	public String getImgPath() {
-		return imgPath;
-	}
-	public void setImgPath(String imgPath) {
-		this.imgPath = imgPath;
 	}
 	public String getSortOption() {
 		return sortOption;
