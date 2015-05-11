@@ -9,8 +9,7 @@ import vo.TeamVo;
 public class Team_Handler {
 	private Data_Handler data_handler;
 	private ArrayList<TeamVo> teamlistvo;
-	
-	
+
 	
 	public Team_Handler()
 	{

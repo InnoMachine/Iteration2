@@ -795,7 +795,6 @@ public class Data_Handler {
 			temp.setAge(listpo.get(i).getAge());
 			temp.setExp(listpo.get(i).getExp());
 			temp.setSchool(listpo.get(i).getSchool());
-			temp.setTeam(listpo.get(i).getCurrentTeam());
 			
 			temp.setTime(0);
 			temp.setHitNum(0);
@@ -814,6 +813,7 @@ public class Data_Handler {
 			temp.setScore(0);
 			temp.setSteal(0);
 			temp.setFirstOnNum(0);
+			temp.setTeam("");
 			
 			temp.setTeamRoundAttack(0);
 			temp.setteamFreeThrowNum(0);

@@ -18,7 +18,6 @@ public class Player_Handler {
 		data_handler = Data_Handler.getInstance();
 		listvo = data_handler.getPlayers();
 	}
-	
 	public PlayerVo getPlayerByName(String name) {
 		for(int i=0;i<listvo.size();i++)
 		{
